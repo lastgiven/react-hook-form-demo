@@ -1,0 +1,38 @@
+{
+  "name": "react-hook-form-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lastgiven/react-hook-form-demo.git",
+  "author": "Werner Potgieter",
+  "license": "MIT",
+  "alias": {
+    "process": false,
+    "components": "./src/components",
+    "utils": "./src/utils",
+    "common": "./src/common",
+    "routes": "./src/routes",
+    "pages": "./src/pages",
+    "src": "./src"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.1",
+    "react-router-dom": "^6.8.1",
+    "styled-components": "^5.3.6"
+  },
+  "devDependencies": {
+    "buffer": "^5.5.3",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "lint-staged": "^13.0.3",
+    "parcel": "^2.8.3",
+    "prettier": "2.8.1"
+  }
+}
