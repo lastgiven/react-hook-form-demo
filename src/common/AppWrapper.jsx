@@ -6,6 +6,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const Div = styled.div`
   height: 100%;
+  background-color: #363633;
+  color: white;
 `;
 
 const router = createBrowserRouter(Routes);
@@ -34,7 +36,7 @@ const AppWrapper = () => {
   };
 
   useEffect(() => {
-    document.title = `SPHERE ${pageTitle !== '' ? ` | ${pageTitle}` : ''}`;
+    document.title = `DEMO ${pageTitle !== '' ? ` | ${pageTitle}` : ''}`;
   }, [pageTitle]);
 
   return (

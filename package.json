@@ -5,6 +5,13 @@
   "repository": "https://github.com/lastgiven/react-hook-form-demo.git",
   "author": "Werner Potgieter",
   "license": "MIT",
+  "scripts": {
+    "clearGitCache": "git rm -r --cached . && git add .",
+    "start": "parcel src/index.html --no-cache",
+    "deploy:release-amend": "pnpm build && aws s3 sync --delete build $AWS_S3_BUCKET",
+    "deploy:release": "pnpm build && aws s3 sync --delete build $AWS_S3_BUCKET",
+    "build": "parcel build src/index.html --dist-dir build --no-source-maps --no-content-hash"
+  },
   "alias": {
     "process": false,
     "components": "./src/components",
@@ -15,11 +22,16 @@
     "src": "./src"
   },
   "dependencies": {
+    "moment": "^2.29.4",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-code-blocks": "^0.0.9-0",
+    "react-dates": "^21.8.0",
     "react-dom": "^18.2.0",
     "react-grid-system": "^8.1.8",
     "react-hook-form": "^7.43.1",
     "react-router-dom": "^6.8.1",
+    "react-select": "^5.7.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
