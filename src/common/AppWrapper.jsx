@@ -40,7 +40,6 @@ const AppWrapper = () => {
   return (
     <AppContextProvider value={contextValue}>
       <Div>
-        <ToastContainer className="toastComponent" />
         <RouterProvider router={router} />
       </Div>
     </AppContextProvider>
