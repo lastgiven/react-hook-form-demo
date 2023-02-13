@@ -71,7 +71,7 @@ const Form6Component = ({ submit }) => {
                   required: 'Please provide a valid name',
                 }}
                 error={
-                  errors?.guardian?.[index]?.name && <ErrorMessage message={errors.guardian[index].name.message} />
+                  errors?.guardians?.[index]?.name && <ErrorMessage message={errors.guardians[index].name.message} />
                 }
               />
             </Col>
