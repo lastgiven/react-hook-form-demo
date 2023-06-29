@@ -21,7 +21,7 @@ const Form6 = () => {
   const [data, setData] = useState({});
   const methods = useForm();
   useEffect(() => {
-    setPageTitle('Form 2');
+    setPageTitle('Form 6');
   });
 
   const submit = (values) => {

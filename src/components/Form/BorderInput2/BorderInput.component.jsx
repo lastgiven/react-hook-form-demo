@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
 // import styling of the component:
-import { Container, StyledInput, Icon, InputHeader } from './CustomInput.style';
+import { Container, StyledInput, Icon, InputHeader } from './BorderInput.style';
 
-const CustomInput = ({
+const BorderInput = ({
   name,
   label,
   register,
@@ -13,88 +13,95 @@ const CustomInput = ({
   error,
   value,
   customStyle,
-  onChange,
-  onInput,
   stateValue,
   inputStyle,
   fontColor,
+  backgroundColor,
   labelAbove,
   disabled,
   placeholder,
+  onChange,
   step,
   min,
+  max,
   id,
   cy,
+  main,
 }) => (
-  <Container main {...customStyle} labelAbove={labelAbove}>
+  <Container main={main} {...customStyle} labelAbove={labelAbove}>
     {labelAbove && <InputHeader>{label}</InputHeader>}
-    <StyledInput
-      id={id}
-      label={label}
-      placeholder={placeholder || label}
-      type={type}
-      step={step}
-      min={min}
-      data-cy={cy}
-      defaultValue={!stateValue ? value : undefined}
-      onChange={onChange}
-      {...(register ? register(name, required) : {})}
-      onInput={onInput}
-      value={stateValue ? value : undefined}
-      style={inputStyle}
-      fontColor={fontColor}
-      disabled={disabled}
-    />
-    <Icon>{icon}</Icon>
+    <Container backgroundColor={backgroundColor} {...customStyle}>
+      <StyledInput
+        id={id}
+        label={label}
+        placeholder={placeholder || label}
+        type={type}
+        step={step}
+        min={min}
+        max={max}
+        defaultValue={!stateValue ? value : undefined}
+        {...(register ? register(name, required) : {})}
+        value={stateValue ? value : undefined}
+        style={inputStyle}
+        fontColor={fontColor}
+        disabled={disabled}
+        data-cy={cy}
+        onChange={onChange}
+      />
+      <Icon>{icon}</Icon>
+    </Container>
     <div style={{ alignSelf: 'flex-start' }}>{error}</div>
   </Container>
 );
 
-CustomInput.defaultProps = {
+BorderInput.defaultProps = {
   register: undefined,
   required: {},
   icon: undefined,
   error: null,
   customStyle: {},
-  value: '',
   onChange: undefined,
-  onInput: undefined,
+  value: '',
   stateValue: false,
   inputStyle: undefined,
   fontColor: undefined,
+  backgroundColor: undefined,
   label: '',
-  type: undefined,
   labelAbove: false,
   disabled: false,
   placeholder: undefined,
   step: undefined,
+  max: undefined,
   min: undefined,
   id: undefined,
   cy: undefined,
+  main: true,
 };
 
-CustomInput.propTypes = {
+BorderInput.propTypes = {
   name: PropTypes.string.isRequired,
   labelAbove: PropTypes.bool,
   label: PropTypes.string,
   register: PropTypes.func,
+  onChange: PropTypes.func,
   required: PropTypes.object,
   icon: PropTypes.element,
-  type: PropTypes.string,
+  type: PropTypes.string.isRequired,
   error: PropTypes.object,
   customStyle: PropTypes.object,
   value: PropTypes.string,
   fontColor: PropTypes.string,
-  onChange: PropTypes.func,
-  onInput: PropTypes.func,
+  backgroundColor: PropTypes.string,
   stateValue: PropTypes.bool,
   inputStyle: PropTypes.object,
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   step: PropTypes.string,
   min: PropTypes.number,
+  max: PropTypes.number,
   id: PropTypes.string,
   cy: PropTypes.string,
+  main: PropTypes.bool,
 };
 
-export default CustomInput;
+export default BorderInput;

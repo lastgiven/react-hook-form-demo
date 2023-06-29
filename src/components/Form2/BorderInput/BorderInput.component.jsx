@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 
 // import styling of the component:
+import { useFormContext } from 'react-hook-form';
+import ErrorMessage from 'components/Error/ErrorMessage2.component';
 import { Container, StyledInput, Icon, InputHeader } from './BorderInput.style';
 
 const BorderInput = ({
   name,
   label,
-  register,
   required,
   icon,
   type,
-  error,
   value,
   customStyle,
   stateValue,
@@ -20,41 +20,46 @@ const BorderInput = ({
   labelAbove,
   disabled,
   placeholder,
-  onChange,
   step,
   min,
   max,
   id,
   cy,
   main,
-}) => (
-  <Container main={main} {...customStyle} labelAbove={labelAbove}>
-    {labelAbove && <InputHeader>{label}</InputHeader>}
-    <Container backgroundColor={backgroundColor} {...customStyle}>
-      <StyledInput
-        id={id}
-        label={label}
-        placeholder={placeholder || label}
-        type={type}
-        step={step}
-        min={min}
-        max={max}
-        defaultValue={!stateValue ? value : undefined}
-        {...(register ? register(name, required) : {})}
-        value={stateValue ? value : undefined}
-        style={inputStyle}
-        fontColor={fontColor}
-        disabled={disabled}
-        data-cy={cy}
-      />
-      <Icon>{icon}</Icon>
+}) => {
+  const {
+    register,
+    formState: { errors = {} },
+  } = useFormContext();
+
+  return (
+    <Container main={main} {...customStyle} labelAbove={labelAbove}>
+      {labelAbove && <InputHeader>{label}</InputHeader>}
+      <Container backgroundColor={backgroundColor} {...customStyle}>
+        <StyledInput
+          id={id}
+          label={label}
+          placeholder={placeholder || label}
+          type={type}
+          step={step}
+          min={min}
+          max={max}
+          defaultValue={!stateValue ? value : undefined}
+          {...(register ? register(name, required) : {})}
+          value={stateValue ? value : undefined}
+          style={inputStyle}
+          fontColor={fontColor}
+          disabled={disabled}
+          data-cy={cy}
+        />
+        <Icon>{icon}</Icon>
+      </Container>
+      <ErrorMessage errors={errors} name={name} />
     </Container>
-    <div style={{ alignSelf: 'flex-start' }}>{error}</div>
-  </Container>
-);
+  );
+};
 
 BorderInput.defaultProps = {
-  register: undefined,
   required: {},
   icon: undefined,
   error: null,
@@ -80,7 +85,6 @@ BorderInput.propTypes = {
   name: PropTypes.string.isRequired,
   labelAbove: PropTypes.bool,
   label: PropTypes.string,
-  register: PropTypes.func,
   required: PropTypes.object,
   icon: PropTypes.element,
   type: PropTypes.string.isRequired,

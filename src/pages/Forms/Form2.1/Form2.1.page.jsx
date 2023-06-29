@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { APP_CONTEXT } from 'utils/context';
-import Form8Code from './Form7.code';
-import Form8Component from './Form.component';
+import Form2Code from './Form2.1.code';
+import Form2Component from './Form2.1.component';
 
 const Pre = styled.div`
   color: white;
@@ -16,27 +16,13 @@ const Pre = styled.div`
   }
 `;
 
-const Form8 = () => {
+const Form2 = () => {
   const { setPageTitle } = useContext(APP_CONTEXT);
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const methods = useForm({
-    mode: 'all',
-  });
-  const { reset } = methods;
+  const methods = useForm();
   useEffect(() => {
-    setPageTitle('Form 8');
+    setPageTitle('Form 2.1');
   });
-
-  useEffect(() => {
-    setTimeout(() => {
-      reset({
-        name: 'Hello',
-        surname: 'User',
-      });
-      setLoading(false);
-    }, 2000);
-  }, [reset, setLoading]);
 
   const submit = (values) => {
     setData(values);
@@ -47,7 +33,7 @@ const Form8 = () => {
       <Row>
         <Col sm={6}>
           <FormProvider {...methods}>
-            <Form8Component submit={submit} title="Edit Details and weird validations" loading={loading} />
+            <Form2Component submit={submit} />
           </FormProvider>
           <Pre>
             <h2>JSON Preview:</h2>
@@ -55,11 +41,11 @@ const Form8 = () => {
           </Pre>
         </Col>
         <Col sm={6}>
-          <Form8Code />
+          <Form2Code />
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default Form8;
+export default Form2;

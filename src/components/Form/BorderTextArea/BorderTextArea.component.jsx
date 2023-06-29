@@ -23,31 +23,29 @@ const BorderTextArea = ({
   disabled,
   rows,
   cy,
-}) => {
-  return (
-    <Container main {...customStyle} labelAbove={labelAbove}>
-      {labelAbove && <InputHeader>{label}</InputHeader>}
-      <Container {...customStyle}>
-        <StyledTextArea
-          data-cy={cy}
-          label={label}
-          placeholder={label}
-          defaultValue={!stateValue ? value : undefined}
-          onChange={onChange}
-          {...(register ? register(name, required) : {})}
-          onInput={onInput}
-          value={stateValue ? value : undefined}
-          style={inputStyle}
-          fontColor={fontColor}
-          disabled={disabled}
-          rows={rows}
-        />
-        {icon && <Icon>{icon}</Icon>}
-      </Container>
-      <div style={{ alignSelf: 'flex-start' }}>{error}</div>
+}) => (
+  <Container main {...customStyle} labelAbove={labelAbove}>
+    {labelAbove && <InputHeader>{label}</InputHeader>}
+    <Container {...customStyle}>
+      <StyledTextArea
+        data-cy={cy}
+        label={label}
+        placeholder={label}
+        defaultValue={!stateValue ? value : undefined}
+        onChange={onChange}
+        {...(register ? register(name, required) : {})}
+        onInput={onInput}
+        value={stateValue ? value : undefined}
+        style={inputStyle}
+        fontColor={fontColor}
+        disabled={disabled}
+        rows={rows}
+      />
+      {icon && <Icon>{icon}</Icon>}
     </Container>
-  );
-};
+    <div style={{ alignSelf: 'flex-start' }}>{error}</div>
+  </Container>
+);
 
 BorderTextArea.defaultProps = {
   register: undefined,

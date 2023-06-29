@@ -18,26 +18,24 @@ const LineInput = ({
   onChange,
   stateValue,
   inputStyle,
-}) => {
-  return (
-    <Container main {...customStyle}>
-      <Container {...customStyle}>
-        <StyledInput
-          label={label}
-          placeholder={label}
-          type={type}
-          defaultValue={!stateValue ? value : undefined}
-          onChange={onChange}
-          {...(register ? register(name, required) : {})}
-          value={stateValue ? value : undefined}
-          style={inputStyle}
-        />
-        <Icon>{icon}</Icon>
-      </Container>
-      <div style={{ alignSelf: 'flex-start' }}>{error}</div>
+}) => (
+  <Container main {...customStyle}>
+    <Container {...customStyle}>
+      <StyledInput
+        label={label}
+        placeholder={label}
+        type={type}
+        defaultValue={!stateValue ? value : undefined}
+        onChange={onChange}
+        {...(register ? register(name, required) : {})}
+        value={stateValue ? value : undefined}
+        style={inputStyle}
+      />
+      <Icon>{icon}</Icon>
     </Container>
-  );
-};
+    <div style={{ alignSelf: 'flex-start' }}>{error}</div>
+  </Container>
+);
 
 LineInput.defaultProps = {
   register: undefined,

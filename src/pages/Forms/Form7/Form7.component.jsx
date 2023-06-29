@@ -1,16 +1,11 @@
 import Button from 'components/Button/Button.component';
-import ErrorMessage from 'components/Error/ErrorMessage.component';
-import BorderInput from 'components/Form/BorderInput/BorderInput.component';
+import BorderInput from 'components/Form2/BorderInput/BorderInput.component';
 import { Col, Row } from 'components/Grid/Grid.component';
 import PropTypes from 'prop-types';
 import { useFormContext } from 'react-hook-form';
 
 const FormComponent = ({ submit, title, loading }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useFormContext();
+  const { handleSubmit } = useFormContext();
   return (
     <Row>
       <Col xs={12}>
@@ -21,12 +16,36 @@ const FormComponent = ({ submit, title, loading }) => {
           label="Name"
           labelAbove
           placeholder="enter name here"
-          register={register}
           name="name"
           required={{
             required: 'Please provide a valid name',
           }}
-          error={errors.name && <ErrorMessage message={errors.name.message} />}
+        />
+      </Col>
+      <Col xs={6}>
+        <BorderInput
+          label="Age"
+          labelAbove
+          placeholder="enter age here"
+          name="age"
+          required={{
+            required: 'Please provide a valid age',
+            min: 15,
+            setValueAs: (v) => (v === '69' ? 'No No' : v),
+          }}
+        />
+      </Col>
+      <Col xs={6}>
+        <BorderInput
+          label="Age"
+          labelAbove
+          placeholder="enter age here"
+          name="sub.age"
+          required={{
+            required: 'Please provide a valid age',
+            min: 15,
+            setValueAs: (v) => (v === '69' ? 'No No' : v),
+          }}
         />
       </Col>
       <Col xs={6}>
@@ -34,7 +53,6 @@ const FormComponent = ({ submit, title, loading }) => {
           label="Surname"
           labelAbove
           placeholder="enter surname here"
-          register={register}
           name="surname"
           required={{
             required: 'Please provide a valid surname',
@@ -57,7 +75,6 @@ const FormComponent = ({ submit, title, loading }) => {
               },
             },
           }}
-          error={errors.surname && <ErrorMessage message={errors.surname.message} />}
         />
       </Col>
       <Col xs={12}>

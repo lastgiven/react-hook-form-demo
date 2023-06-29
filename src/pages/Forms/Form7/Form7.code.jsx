@@ -9,7 +9,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { APP_CONTEXT } from 'utils/context';
 import Form7Code from './Form7.code';
-import Form7Component from './Form.component';
+import Form7Component from './Form7.component';
 
 const Pre = styled.div\`
   color: white;
@@ -38,7 +38,7 @@ const Form7 = () => {
       <Row>
         <Col sm={6}>
           <FormProvider {...methods}>
-            <Form7Component submit={submit} title="Form for create and weird validations" />
+            <Form7Component submit={submit} title="Form Provider" />
           </FormProvider>
           <Pre>
             <h2>JSON Preview:</h2>
@@ -62,18 +62,13 @@ export default Form7;
 * FORM START
 */
 import Button from 'components/Button/Button.component';
-import ErrorMessage from 'components/Error/ErrorMessage.component';
-import BorderInput from 'components/Form/BorderInput/BorderInput.component';
+import BorderInput from 'components/Form2/BorderInput/BorderInput.component';
 import { Col, Row } from 'components/Grid/Grid.component';
 import PropTypes from 'prop-types';
 import { useFormContext } from 'react-hook-form';
 
 const FormComponent = ({ submit, title, loading }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useFormContext();
+  const { handleSubmit } = useFormContext();
   return (
     <Row>
       <Col xs={12}>
@@ -84,12 +79,36 @@ const FormComponent = ({ submit, title, loading }) => {
           label="Name"
           labelAbove
           placeholder="enter name here"
-          register={register}
           name="name"
           required={{
             required: 'Please provide a valid name',
           }}
-          error={errors.name && <ErrorMessage message={errors.name.message} />}
+        />
+      </Col>
+      <Col xs={6}>
+        <BorderInput
+          label="Age"
+          labelAbove
+          placeholder="enter age here"
+          name="age"
+          required={{
+            required: 'Please provide a valid age',
+            min: 15,
+            setValueAs: (v) => (v === '69' ? 'No No' : v),
+          }}
+        />
+      </Col>
+      <Col xs={6}>
+        <BorderInput
+          label="Age"
+          labelAbove
+          placeholder="enter age here"
+          name="sub.age"
+          required={{
+            required: 'Please provide a valid age',
+            min: 15,
+            setValueAs: (v) => (v === '69' ? 'No No' : v),
+          }}
         />
       </Col>
       <Col xs={6}>
@@ -97,7 +116,6 @@ const FormComponent = ({ submit, title, loading }) => {
           label="Surname"
           labelAbove
           placeholder="enter surname here"
-          register={register}
           name="surname"
           required={{
             required: 'Please provide a valid surname',
@@ -120,7 +138,6 @@ const FormComponent = ({ submit, title, loading }) => {
               },
             },
           }}
-          error={errors.surname && <ErrorMessage message={errors.surname.message} />}
         />
       </Col>
       <Col xs={12}>
@@ -147,16 +164,16 @@ export default FormComponent;
 import PropTypes from 'prop-types';
 
 // import styling of the component:
+import { useFormContext } from 'react-hook-form';
+import ErrorMessage from 'components/Error/ErrorMessage.component';
 import { Container, StyledInput, Icon, InputHeader } from './BorderInput.style';
 
 const BorderInput = ({
   name,
   label,
-  register,
   required,
   icon,
   type,
-  error,
   value,
   customStyle,
   stateValue,
@@ -172,34 +189,40 @@ const BorderInput = ({
   id,
   cy,
   main,
-}) => (
-  <Container main={main} {...customStyle} labelAbove={labelAbove}>
-    {labelAbove && <InputHeader>{label}</InputHeader>}
-    <Container backgroundColor={backgroundColor} {...customStyle}>
-      <StyledInput
-        id={id}
-        label={label}
-        placeholder={placeholder || label}
-        type={type}
-        step={step}
-        min={min}
-        max={max}
-        defaultValue={!stateValue ? value : undefined}
-        {...(register ? register(name, required) : {})}
-        value={stateValue ? value : undefined}
-        style={inputStyle}
-        fontColor={fontColor}
-        disabled={disabled}
-        data-cy={cy}
-      />
-      <Icon>{icon}</Icon>
+}) => {
+  const {
+    register,
+    formState: { errors = {} },
+  } = useFormContext();
+
+  return (
+    <Container main={main} {...customStyle} labelAbove={labelAbove}>
+      {labelAbove && <InputHeader>{label}</InputHeader>}
+      <Container backgroundColor={backgroundColor} {...customStyle}>
+        <StyledInput
+          id={id}
+          label={label}
+          placeholder={placeholder || label}
+          type={type}
+          step={step}
+          min={min}
+          max={max}
+          defaultValue={!stateValue ? value : undefined}
+          {...(register ? register(name, required) : {})}
+          value={stateValue ? value : undefined}
+          style={inputStyle}
+          fontColor={fontColor}
+          disabled={disabled}
+          data-cy={cy}
+        />
+        <Icon>{icon}</Icon>
+      </Container>
+      <ErrorMessage errors={errors} name={name} />
     </Container>
-    <div style={{ alignSelf: 'flex-start' }}>{error}</div>
-  </Container>
-);
+  );
+};
 
 BorderInput.defaultProps = {
-  register: undefined,
   required: {},
   icon: undefined,
   error: null,
@@ -225,7 +248,6 @@ BorderInput.propTypes = {
   name: PropTypes.string.isRequired,
   labelAbove: PropTypes.bool,
   label: PropTypes.string,
-  register: PropTypes.func,
   required: PropTypes.object,
   icon: PropTypes.element,
   type: PropTypes.string.isRequired,
@@ -247,15 +269,57 @@ BorderInput.propTypes = {
 };
 
 export default BorderInput;
-
 /*
 * BORDER INPUT END
+*/
+/*
+* ERROR MESSAGE START
+*/
+import { string, object } from 'prop-types';
+import { P } from '../Typography/Typography.component';
+import { ErrorMessageWrapper } from './Errors.style';
+
+const getError = (errors, name) => {
+  const explodedString = name.split('.');
+  let obj = errors;
+  for (let i = 0, l = explodedString.length; i < l; i += 1) {
+    if (!obj) {
+      break;
+    }
+    obj = obj[explodedString[i]];
+  }
+  return obj;
+};
+
+const ErrorMessage = ({ errors, name }) => {
+  const message = getError(errors, name);
+  if (!message) {
+    return null;
+  }
+  return (
+    <div style={{ alignSelf: 'flex-start' }}>
+      <ErrorMessageWrapper>
+        <P>{\`* \${message}\`}</P>
+      </ErrorMessageWrapper>
+    </div>
+  );
+};
+
+ErrorMessage.propTypes = {
+  errors: object.isRequired,
+  name: string.isRequired,
+};
+
+export default ErrorMessage;
+
+/*
+* ERROR MESSAGE END
 */
 `;
 
 const Form7Code = () => (
   <CopyBlock
-    customStyle={{ maxHeight: '97vh', overflow: 'auto' }}
+    customStyle={{ maxHeight: '97vh', overflow: 'auto', position: 'sticky', top: '15px' }}
     text={init}
     language="jsx"
     showLineNumbers

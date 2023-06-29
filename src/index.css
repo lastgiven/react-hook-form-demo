@@ -7,6 +7,7 @@ body,
   width: 100vw;
   overflow-x: hidden;
   cursor: default;
+  background-color: #363633;
 }
 
 *::-webkit-scrollbar {

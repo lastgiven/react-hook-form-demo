@@ -207,7 +207,7 @@ export default BorderInput;
 
 const Form1Code = () => (
   <CopyBlock
-    customStyle={{ maxHeight: '97vh', overflow: 'auto' }}
+    customStyle={{ maxHeight: '97vh', overflow: 'auto', position: 'sticky', top: '15px' }}
     text={init}
     language="jsx"
     showLineNumbers

@@ -3,8 +3,22 @@ import { useContext, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { APP_CONTEXT } from 'utils/context';
-import Form7Code from './Form7.code';
-import Form7Component from './Form7.component';
+import Form8Code from './Form8.code';
+import Form8Component from './Form8.component';
+
+const getDefaultProps = () =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        name: 'Werner',
+        age: '123',
+        sub: {
+          age: '123',
+        },
+        surname: 'Potgieter',
+      });
+    }, 5000);
+  });
 
 const Pre = styled.div`
   color: white;
@@ -16,12 +30,14 @@ const Pre = styled.div`
   }
 `;
 
-const Form7 = () => {
+const Form8 = () => {
   const { setPageTitle } = useContext(APP_CONTEXT);
   const [data, setData] = useState({});
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: async () => getDefaultProps(),
+  });
   useEffect(() => {
-    setPageTitle('Form 7');
+    setPageTitle('Form 8');
   });
 
   const submit = (values) => {
@@ -33,7 +49,7 @@ const Form7 = () => {
       <Row>
         <Col sm={6}>
           <FormProvider {...methods}>
-            <Form7Component submit={submit} title="Form Provider" />
+            <Form8Component submit={submit} title="Form Provider With Async Default Props" />
           </FormProvider>
           <Pre>
             <h2>JSON Preview:</h2>
@@ -41,11 +57,11 @@ const Form7 = () => {
           </Pre>
         </Col>
         <Col sm={6}>
-          <Form7Code />
+          <Form8Code />
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default Form7;
+export default Form8;

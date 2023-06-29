@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { APP_CONTEXT } from 'utils/context';
-import Form7Code from './Form7.code';
-import Form7Component from './Form7.component';
+import Form2Code from './Form2.2.code';
+import Form2Component from './Form2.2.component';
 
 const Pre = styled.div`
   color: white;
@@ -16,12 +16,12 @@ const Pre = styled.div`
   }
 `;
 
-const Form7 = () => {
+const Form2 = () => {
   const { setPageTitle } = useContext(APP_CONTEXT);
   const [data, setData] = useState({});
   const methods = useForm();
   useEffect(() => {
-    setPageTitle('Form 7');
+    setPageTitle('Form 2');
   });
 
   const submit = (values) => {
@@ -33,7 +33,7 @@ const Form7 = () => {
       <Row>
         <Col sm={6}>
           <FormProvider {...methods}>
-            <Form7Component submit={submit} title="Form Provider" />
+            <Form2Component submit={submit} />
           </FormProvider>
           <Pre>
             <h2>JSON Preview:</h2>
@@ -41,11 +41,11 @@ const Form7 = () => {
           </Pre>
         </Col>
         <Col sm={6}>
-          <Form7Code />
+          <Form2Code />
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default Form7;
+export default Form2;
