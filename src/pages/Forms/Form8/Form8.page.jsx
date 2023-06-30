@@ -17,7 +17,7 @@ const getDefaultProps = () =>
         },
         surname: 'Potgieter',
       });
-    }, 5000);
+    }, 10000);
   });
 
 const Pre = styled.div`

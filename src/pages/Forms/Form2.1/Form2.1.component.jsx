@@ -25,11 +25,14 @@ const Form2Component = ({ submit }) => {
           name="name"
           required={{
             required: 'Please provide a valid name',
-          }}
-          onChange={(e) => {
-            if (e.target.value === 'bad') {
-              alert('practice');
-            }
+            onChange: (e) => {
+              if (e.target.value === 'bad') {
+                alert('practice');
+              }
+            },
+            onBlur: (e) => {
+              alert('Blurred');
+            },
           }}
           error={errors.name && <ErrorMessage message={errors.name.message} />}
         />

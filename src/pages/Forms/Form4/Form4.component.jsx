@@ -3,6 +3,7 @@ import ErrorMessage from 'components/Error/ErrorMessage.component';
 import BorderInput from 'components/Form/BorderInput/BorderInput.component';
 import SingleDatePicker from 'components/Form/SingleDatePicker/SingleDatePicker.component';
 import { Col, Row } from 'components/Grid/Grid.component';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useFormContext } from 'react-hook-form';
 
@@ -49,7 +50,7 @@ const Form4Component = ({ submit }) => {
           control={control}
           name="dateOfBirth"
           header="Date of birth"
-          defaultValue={null}
+          defaultValue={moment()}
           error={errors.dateOfBirth && <ErrorMessage message={errors.dateOfBirth.message} />}
           required={{
             required: 'Please select date of birth',

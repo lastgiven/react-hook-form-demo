@@ -4,6 +4,18 @@ import { Col, Row } from 'components/Grid/Grid.component';
 import PropTypes from 'prop-types';
 import { useFormContext } from 'react-hook-form';
 
+const mockRequest = (val) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      console.log('val: ', val);
+      if (val === 'test') {
+        resolve('Not Valid');
+      } else {
+        resolve(true);
+      }
+    }, 5000);
+  });
+
 const FormComponent = ({ submit, title, loading }) => {
   const { handleSubmit } = useFormContext();
   return (
@@ -42,6 +54,7 @@ const FormComponent = ({ submit, title, loading }) => {
           placeholder="enter age here"
           name="sub.age"
           required={{
+            valueAsNumber: true,
             required: 'Please provide a valid age',
             min: 15,
             setValueAs: (v) => (v === '69' ? 'No No' : v),
@@ -73,6 +86,7 @@ const FormComponent = ({ submit, title, loading }) => {
                 }
                 return true;
               },
+              isValid: async (v) => mockRequest(v) || 'error message',
             },
           }}
         />

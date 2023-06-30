@@ -30,6 +30,9 @@ const Form2Component = ({ submit }) => {
                 alert('practice');
               }
             },
+            onBlur: (e) => {
+              alert('Blurred');
+            },
           }}
           error={errors.name && <ErrorMessage message={errors.name.message} />}
         />
