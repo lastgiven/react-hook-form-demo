@@ -53,6 +53,7 @@ const FormComponent = ({ submit, title, loading }) => {
           labelAbove
           placeholder="enter age here"
           name="sub.age"
+          min={14}
           required={{
             valueAsNumber: true,
             required: 'Please provide a valid age',
